@@ -1,0 +1,31 @@
+{{- $name := "" -}}
+{{- $email := "" -}}
+{{- $github := "" -}}
+{{- $tz := "" -}}
+
+{{- with (index . "user") -}}
+{{-   with (index . "name") -}}{{- $name = . -}}{{- end -}}
+{{-   with (index . "email") -}}{{- $email = . -}}{{- end -}}
+{{-   with (index . "github") -}}{{- $github = . -}}{{- end -}}
+{{-   with (index . "tz") -}}{{- $tz = . -}}{{- end -}}
+{{- end -}}
+
+
+{{- $authorized_keys := "" -}}
+
+{{- with (index . "ssh") -}}
+{{-   with (index . "authorized_keys") -}}{{- $authorized_keys = . -}}{{- end -}}
+{{- end -}}
+
+[data]
+
+  [data.user]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    github = {{ $github | quote }}
+    tz = {{ $tz | quote }}
+
+  [data.ssh]
+    authorized_keys = [{{ with $authorized_keys}}{{ range . }}
+      {{ . | quote }},{{ end }}
+    {{ end }}]

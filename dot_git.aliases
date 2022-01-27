@@ -1,0 +1,37 @@
+
+[alias]
+  b  = branch -vva
+  br = branch -vva
+  co = checkout
+  s  = status -s
+  sm = submodule
+
+  l   = log -n 25 --graph --abbrev=3
+  la  = log --all --abbrev=3
+  lg  = log --graph --abbrev=3
+  lga = log --graph --all --abbrev=3
+  ll  = log --abbrev=3 --pretty=fuller
+
+  ls  = ls-files
+  lsc = diff --cached --name-only --diff-filter=ARMTC --relative
+  lsf = "!f() { git diff-tree --no-commit-id --name-only -r ${1:-HEAD}; }; f"
+  lsm = ls-files -m
+  lsu = diff --name-only --diff-filter=U --relative
+  un  = ls-files -o --exclude-standard
+
+  d  = "!f() { git diff-index --quiet HEAD -- ; git diff --patch-with-stat; }; f"
+  dc = diff --cached --minimal --word-diff -w
+  dw = "!f() { git diff-index --quiet HEAD -- ; git diff --word-diff=color --patch-with-stat; }; f"
+  sh = "!f() { git show --pretty=fuller --minimal --word-diff -w ${1:-HEAD}; }; f"
+
+  f = "!f() { git fetch --all --tags --prune; }; f"
+
+  amend        = commit --amend --reuse-message=HEAD
+  authors      = shortlog --summary --numbered
+  branches     = branch -a
+  contributors = shortlog --summary --numbered
+  ignored      = !git ls-files -v | grep "^[[:lower:]]"
+  remotes      = remote -v
+  tags         = tag -l
+
+  push-all = "!f() { for remote in $(git remote); do git push $remote; done; }; f"
