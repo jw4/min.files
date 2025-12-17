@@ -26,6 +26,11 @@ function set_date_prompt () {
   DATE_PROMPT="${WHITE}$(date +'%H:%M:%S')${COLOR_NONE} "
 }
 
+if command -v bashline >/dev/null 2>&1; then
+  function set_bash_prompt() {
+    PS1='$(bashline --exit-code=$? --shlvl=$SHLVL --jobs=\j)'
+  }
+else
 # Set the full bash prompt.
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
@@ -42,6 +47,7 @@ function set_bash_prompt () {
 ${USERLINE}
 ${DATE_PROMPT}${PROMPT_SYMBOL} "
 }
+fi
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
